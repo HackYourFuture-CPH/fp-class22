@@ -43,6 +43,7 @@ export function UserProvider({ children }) {
   const fireBaseProviderValue = useMemo(
     () => ({
       user,
+      db,
       name,
       loading,
       logInWithEmailAndPassword,

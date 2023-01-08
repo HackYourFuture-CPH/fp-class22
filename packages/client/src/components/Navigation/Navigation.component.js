@@ -10,7 +10,7 @@ import userLogin from '../../assets/icons/user.png';
 import shoppingCart from '../../assets/icons/shopping.png';
 
 export const Navigation = () => {
-  const { user } = useUserContext();
+  const { user, logout } = useUserContext();
   const [showMobileLinks, setShowMobileLinks] = useState(false);
 
   return (
@@ -53,6 +53,13 @@ export const Navigation = () => {
                   <Link to="/">
                     <img className="icon-login" src={userLogin} alt="user" />
                   </Link>
+                </div>
+                <div className="logout-button-container">
+                  <Button
+                    label="Logout"
+                    backgroundColor="#F5F5F5"
+                    onClick={logout}
+                  />
                 </div>
               </div>
             ) : (

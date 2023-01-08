@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../userContext';
 import './Signup.styles.css';
 import SignupForm from './SignupForm';
 import validateForm from '../../utils/validateForm';
+import { apiURL } from '../../apiURL';
 
 function Signup() {
-  const { user, loading, registerWithEmailAndPassword, signInWithGoogle } =
-    useUserContext();
+  const {
+    user,
+    name,
+    loading,
+    registerWithEmailAndPassword,
+    signInWithGoogle,
+  } = useUserContext();
   const [formValues, setFormValues] = useState({
     fullname: '',
     email: '',
@@ -26,12 +32,28 @@ function Signup() {
 
   const cleanUpValidation = () => {
     setFormErrors({
-      fullname: {},
-      email: {},
-      password: {},
+      fullname: '',
+      email: '',
+      password: '',
     });
   };
-
+  const addUserToDb = useCallback(async (userCreated, fullname) => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: fullname,
+        email: userCreated.email,
+        uid: userCreated?.uid,
+      }),
+    };
+    await fetch(`${apiURL()}/users`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        /* console.log(data);
+        console.log('user', userCreated, userCreated?.uid); */
+      });
+  }, []);
   const handleSubmit = (event) => {
     event.preventDefault();
     if (Object.keys(formErrors).length !== 0) {
@@ -46,8 +68,12 @@ function Signup() {
   };
   useEffect(() => {
     if (loading) return;
-    if (user) navigate('/');
-  }, [user, loading, navigate]);
+    if (user) {
+      /* console.log('user1', user, user.email); */
+      addUserToDb(user, name);
+      navigate('/');
+    }
+  }, [user, name, loading, navigate, addUserToDb]);
   return (
     <main>
       <img
