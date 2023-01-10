@@ -17,17 +17,13 @@ const getExampleResourceById = async (id) => {
     throw new HttpError('Id should be a number', 400);
   }
 
-  try {
-    const exampleResources = await knex('exampleResources')
-      .select('exampleResources.id as id', 'title')
-      .where({ id });
-    if (exampleResources.length === 0) {
-      throw new HttpError(`incorrect entry with the id of ${id}`, 404);
-    }
-    return exampleResources;
-  } catch (error) {
-    return error.message;
+  const exampleResources = await knex('exampleResources')
+    .select('exampleResources.id as id', 'title')
+    .where({ id });
+  if (exampleResources.length === 0) {
+    throw new HttpError(`incorrect entry with the id of ${id}`, 404);
   }
+  return exampleResources;
 };
 
 const editExampleResource = async (
