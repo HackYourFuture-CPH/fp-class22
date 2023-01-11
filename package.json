@@ -5,11 +5,11 @@
     "packages/*"
   ],
   "engines": {
-    "npm": "please-use-yarn",
     "yarn": ">= 1.19.1",
     "node": ">= 17.3.0"
   },
   "scripts": {
+    "build": "script/build",
     "knex": "knex --cwd ./packages/server",
     "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|ts|tsx|json|css)\"",
     "prettier:check": "yarn prettier --check",

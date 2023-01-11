@@ -19,12 +19,15 @@ root.render(
 reportWebVitals();
 
 function assertEnvironment() {
-  if (process.env.REACT_APP_API_HOST === undefined) {
-    throw new Error('Missing environment variable: REACT_APP_API_HOST');
-  }
+  // In production we construct the API URL with just the path, so there's no need to require the host and port to be set.
+  if (process.env.NODE_ENV !== 'production') {
+    if (process.env.REACT_APP_API_HOST === undefined) {
+      throw new Error('Missing environment variable: REACT_APP_API_HOST');
+    }
 
-  if (process.env.REACT_APP_API_PORT === undefined) {
-    throw new Error('Missing environment variable: REACT_APP_API_PORT');
+    if (process.env.REACT_APP_API_PORT === undefined) {
+      throw new Error('Missing environment variable: REACT_APP_API_PORT');
+    }
   }
 
   if (process.env.REACT_APP_API_PATH === undefined) {

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT_DIR=$(readlink -f $SCRIPT_DIR/..)
+
+cd $ROOT_DIR
+
+REACT_APP_API_PATH=/api yarn workspace client build
+cp -a packages/client/build/. packages/server/public/
