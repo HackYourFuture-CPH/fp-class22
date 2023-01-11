@@ -16,5 +16,10 @@ exports.seed = async function (knex) {
     { user_id: '2', product_id: '5' },
     { user_id: '2', product_id: '11' },
     { user_id: '2', product_id: '16' },
+    { user_id: '3', product_id: '10' },
+    { user_id: '3', product_id: '6' },
+    { user_id: '3', product_id: '5' },
+    { user_id: '3', product_id: '4' },
+    { user_id: '3', product_id: '7' },
   ]);
 };

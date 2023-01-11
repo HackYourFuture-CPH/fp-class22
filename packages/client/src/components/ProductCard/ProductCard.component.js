@@ -9,12 +9,15 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({
+  favoriteId,
   id,
   title,
   price,
   isFavorite,
-  toggleFavorite,
   setModalState,
+  toggleFavorite,
+  addFavorite,
+  setOpenModal,
 }) => {
   return (
     <div className="product-card-wrapper">
@@ -23,13 +26,14 @@ const ProductCard = ({
         <div className="cart-favorite-wrapper">
           <img src={CartIcon} alt="Cart Icon" />
           <button
-            onClick={(event) => {
-              isFavorite
-                ? setModalState({ modalStatus: true, favoriteId: id })
-                : toggleFavorite(id, title, price, event);
-            }}
             type="button"
             className="favorite-button"
+            onClick={(event) => {
+              isFavorite
+                ? setModalState({ modalStatus: true, favoritesId: favoriteId })
+                : addFavorite(id);
+              setOpenModal(true);
+            }}
           >
             <img
               src={isFavorite ? FullFavoriteIcon : EmptyFavoriteIcon}
@@ -59,8 +63,11 @@ ProductCard.propTypes = {
   title: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  favoriteId: PropTypes.number.isRequired,
   isFavorite: PropTypes.bool.isRequired,
-  toggleFavorite: PropTypes.func.isRequired,
   setModalState: PropTypes.func.isRequired,
+  toggleFavorite: PropTypes.func.isRequired,
+  addFavorite: PropTypes.func.isRequired,
+  setOpenModal: PropTypes.bool.isRequired,
 };
 export default ProductCard;
