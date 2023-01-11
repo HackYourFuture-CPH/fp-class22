@@ -13,5 +13,8 @@ exports.seed = async function (knex) {
     { order_id: 2, variant_id: 1, quantity: 1 },
     { order_id: 2, variant_id: 5, quantity: 1 },
     { order_id: 2, variant_id: 7, quantity: 2 },
+    { order_id: 5, variant_id: 1, quantity: 1 },
+    { order_id: 5, variant_id: 5, quantity: 1 },
+    { order_id: 5, variant_id: 7, quantity: 1 },
   ]);
 };

@@ -13,5 +13,10 @@ exports.seed = async function (knex) {
     },
     { full_name: 'Alan Turing', email: 'alan@turing.com' },
     { full_name: 'Steve Jobs', email: 'steve@jobs.com' },
+    {
+      full_name: 'PrakashKumar Patel',
+      email: 'patel.prakash92@gmail.com',
+      uid: 'jfBYpNkMlubzKsHeMNmwUVWQdWb2',
+    },
   ]);
 };
