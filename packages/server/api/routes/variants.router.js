@@ -7,22 +7,33 @@ const variantsController = require('../controllers/variants.controller');
 
 /**
  * @swagger
- * /variants?product=:
+ * /variants:
  *  get:
  *    tags:
  *    - variants
- *    summary: Get variants by productId
+ *    summary: Get variants by productId and by color or by size
  *    description:
  *      Will return All variants with a matching productId.
  *    produces: application/json
  *    parameters:
  *     - in: query
- *       name: product
+ *       name: product_id
  *       schema:
  *         type: integer
  *         required: true
  *         description: The ID of the variants to get
- *
+ *     - in: query
+ *       name: color
+ *       schema:
+ *         type: string
+ *         required: false
+ *         description: The color of the variants to get
+ *     - in: query
+ *       name: size
+ *       schema:
+ *         type: string
+ *         required: false
+ *         description: The size of the variants to get
  *    responses:
  *      200:
  *        description: Successful request

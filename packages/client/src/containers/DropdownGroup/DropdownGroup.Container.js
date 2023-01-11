@@ -6,6 +6,9 @@ import './DropdownGroup.Style.css';
 
 export const DropdownGroup = ({ productId }) => {
   const [variants, setVariants] = useState([]);
+  const [showVariants, setShowVariants] = useState(false);
+  const [filteredSize, setFilteredSize] = useState([]);
+  const [filteredQuantity, setFilteredQuantity] = useState([]);
 
   let colors = [];
   let sizes = [];
@@ -35,16 +38,56 @@ export const DropdownGroup = ({ productId }) => {
   sizes = [...new Set(sizes)];
   quantities = [...new Set(quantities)];
 
+  const fetchVariantsByColor = async (color) => {
+    let filteredSizes = [];
+    let filteredQuantities = [];
+    const response = await fetch(
+      `${apiURL()}/variants?color=${color}&product_id=${productId}`,
+    );
+    const filteredVariantsData = await response.json();
+    filteredVariantsData.forEach((variant) => {
+      filteredSizes.push(variant.size);
+      filteredQuantities.push(variant.stock);
+    });
+    filteredSizes = [...new Set(filteredSizes)];
+    filteredQuantities = [...new Set(filteredQuantities)];
+    const maxQuantity = Math.max(...filteredQuantities);
+    if (maxQuantity >= 5) {
+      filteredQuantities = [...Array(10).keys()].map((i) => i + 1);
+    } else {
+      filteredQuantities = [...Array(maxQuantity).keys()].map((i) => i + 1);
+    }
+    setFilteredSize(filteredSizes);
+    setFilteredQuantity(filteredQuantities);
+    setShowVariants(true);
+  };
+
   return (
     <div className="dropdown-group-list">
       <div className="dropdown-group">
-        <ViewDropdown options={colors} label="Color" />
+        <ViewDropdown
+          options={colors}
+          label="Color"
+          onSelect={(color) => fetchVariantsByColor(color)}
+        />
       </div>
       <div className="dropdown-group">
-        <ViewDropdown options={sizes} label="Size" />
+        {!showVariants ? (
+          <ViewDropdown options={sizes} label="Size" disabled="disabled" />
+        ) : (
+          <ViewDropdown options={filteredSize} label="Size" />
+        )}
       </div>
       <div className="dropdown-group">
-        <ViewDropdown options={quantities} label="Quantity" />
+        {!showVariants ? (
+          <ViewDropdown
+            options={quantities}
+            label="Quantity"
+            disabled="disabled"
+          />
+        ) : (
+          <ViewDropdown options={filteredQuantity} label="Quantity" />
+        )}
       </div>
     </div>
   );
